@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Giao Hàng</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./index.js"></script>
+</head>
+<body>
+    <header>
+        <div class="imgfirst">
+        <img src="./img/giao hang.webp"/>
+        </div>
+        <h1>Ứng Dụng Giao Hàng</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Trang Chủ</a></li>
+                <li><a href="#">Theo Dõi Đơn Hàng</a></li>
+                <li><a href="#">Liên Hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="ad-banner">
+            <p>Giảm giá 20% cho đơn hàng đầu tiên! Nhập mã: FIRST20</p>
+        </div>
+        
+        <div id="authSection">
+            <h2>Đăng Ký</h2>
+            <form id="registerForm">
+                <label for="regUsername">Tên người dùng:</label></br>
+                <input type="text" id="regUsername" required></br>
+                
+                <label for="regPassword">Mật khẩu:</label></br>
+                <input type="password" id="regPassword" required></br>
+                
+                <button type="submit">Đăng Ký</button>
+            </form>
+
+            <h2>Đăng Nhập</h2>
+            <form id="loginForm">
+                <label for="loginUsername">Tên người dùng:</label></br>
+                <input type="text" id="loginUsername" required></br>
+                
+                <label for="loginPassword">Mật khẩu:</label></br>
+                <input type="password" id="loginPassword" required>
+            </br>
+                <button type="submit">Đăng Nhập</button>
+            </form>
+        </div>
+
+        <div id="orderList" style="display: none;">
+            <h2>Danh Sách Đơn Hàng</h2>
+            <div class="order-item">
+                <h3>Đơn Hàng #001</h3>
+                <p>Trạng thái: Đang giao</p>
+                <p>Địa chỉ giao: 123 Đường ABC, Quận 1</p>
+                <button>Xem Chi Tiết</button>
+            </div>
+            <div class="order-item">
+                <h3>Đơn Hàng #002</h3>
+                <p>Trạng thái: Đã giao</p>
+                <p>Địa chỉ giao: 456 Đường XYZ, Quận 2</p>
+                <button>Xem Chi Tiết</button>
+            </div>
+            <div class="order-item">
+                <h3>Đơn Hàng #003</h3>
+                <p>Trạng thái: Đang chờ xử lý</p>
+                <p>Địa chỉ giao: 789 Đường DEF, Quận 3</p>
+                <button>Xem Chi Tiết</button>
+            </div>
+        </div>
+
+        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 Ứng Dụng Giao Hàng. Bảo lưu mọi quyền.</p>
+    </footer>
+    
+    <script>
+        // JavaScript để xử lý đăng ký và đăng nhập
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("regUsername").value;
+            const password = document.getElementById("regPassword").value;
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+            alert("Đăng ký thành công!");
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+
+            if (username === localStorage.getItem("username") && password === localStorage.getItem("password")) {
+                alert("Đăng nhập thành công!");
+                document.getElementById("authSection").style.display = "none"; // Ẩn phần đăng ký
+                document.getElementById("orderList").style.display = "block"; // Hiển thị danh sách đơn hàng
+            } else {
+                alert("Tên người dùng hoặc mật khẩu không đúng!");
+            }
+        });
+
+        function initMap() {
+            const center = { lat: 10.8231, lng: 106.6297 }; // Tọa độ TP. HCM
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: center,
+            });
+
+            const marker = new google.maps.Marker({
+                position: center,
+                map: map,
+                title: "Vị trí của bạn!",
+            });
+        }
+    </script>
+
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
+</body>
+</html>
